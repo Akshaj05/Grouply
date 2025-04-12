@@ -1,5 +1,10 @@
 package com.example.demo.config;
 
+//import
+import com.example.demo.chat.MessageType;
+import com.example.demo.chat.ChatMessage;
+
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
@@ -13,7 +18,7 @@ import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 @Slf4j //for logging when user leaves chat
 public class WebSocketEventListener {
 
-    private final SimpMessagingTemplate messagingTemplate;
+    private final SimpMessagingTemplate messageTemplate;
 
     @EventListener //to listen on the given event
     public void handleWebSocketDisconnectListener(SessionDisconnectEvent event){
