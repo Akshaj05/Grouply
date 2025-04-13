@@ -84,7 +84,8 @@ function onMessageReceived(payload) {
         messageElement.classList.add('chat-message');
         messageElement.style.display = 'flex';
         messageElement.style.alignItems = 'flex-start';
-        messageElement.style.margin = '10px 0';
+        messageElement.style.fontSize = '12px';
+        // messageElement.style.margin = '10px 0';
 
         var avatarElement = document.createElement('div');
         avatarElement.innerHTML = `
@@ -106,17 +107,18 @@ function onMessageReceived(payload) {
         var contentElement = document.createElement('div');
         contentElement.style.display = 'flex';
         contentElement.style.flexDirection = 'column';
-        contentElement.style.marginLeft = '10px';
+        // contentElement.style.marginLeft = '10px';
 
         var usernameElement = document.createElement('span');
         usernameElement.textContent = message.sender;
-        usernameElement.style.fontSize = '14px';
-        usernameElement.style.color = '#555';
+        usernameElement.style.fontSize = '16px';
+        usernameElement.style.fontWeight = 'bold';
+        usernameElement.style.color = getAvatarColor(message.sender);
 
         var textElement = document.createElement('p');
         textElement.textContent = message.content;
         textElement.style.margin = '0';
-        textElement.style.fontSize = '14px';
+        textElement.style.fontSize = '16px';
 
         contentElement.appendChild(usernameElement);
         contentElement.appendChild(textElement);

@@ -1,53 +1,78 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <title>Spring Boot WebSocket Chat Application</title>
-    <link rel="stylesheet" href="./css/main.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grouply</title>
+    <link rel="stylesheet" href="/css/main.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-<noscript>
-    <h2>Sorry! Your browser doesn't support Javascript</h2>
-</noscript>
+<body class="bg-[#d1edff] flex items-center justify-center min-h-screen p-4">
 
-<div id="username-page">
-    <div class="username-page-container">
-        <h1 class="title">Type your username to enter the Chatroom</h1>
-        <form id="usernameForm" name="usernameForm">
-            <div class="form-group">
-                <input type="text" id="name" placeholder="Username" autocomplete="off" class="form-control" />
-            </div>
-            <div class="form-group">
-                <button type="submit" class="accent username-submit">Start Chatting</button>
-            </div>
-        </form>
+    <div id="username-page" class="flex flex-col md:flex-row bg-white rounded-2xl overflow-hidden shadow-lg max-w-4xl w-full">
+        <!-- Image Logo Section -->
+        <div class="w-full md:w-1/2 bg-white flex items-center justify-center p-8">
+            <img src="./assets/Grouply.png" alt="Logo" class="w-full h-full object-cover rounded-2xl">
+        </div>
+        <!-- Username Form Section -->
+        <div class="w-full md:w-1/2 p-8">
+            <h1 class="text-2xl font-semibold mb-6 text-left">Enter your Username</h1>
+            <form id="usernameForm" name="usernameForm">
+                <div class="form-group mb-4">
+                    <label class="block text-sm text-gray-600 mb-1 text-left" for="name">Username</label>
+                    <input type="text" id="name" placeholder="Username" autocomplete="off"
+                           class="form-control w-full px-4 py-3 rounded-md bg-[#f0f7ff] focus:outline-none" />
+                </div>
+                <div class="form-group">
+                    <button type="submit"
+                            class="username-submit bg-[#373AFF] hover:bg-[#004ea3] text-white px-4 py-3 w-full rounded-md">
+                        Sign In
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-
-<div id="chat-page" class="hidden">
-    <div class="chat-container">
-        <div class="chat-header">
-            <h2>Grouply</h2>
+<!--HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE-->
+    <div id="chat-page" class="hidden w-full h-screen flex flex-col bg-white rounded-xl">
+        <!-- Header -->
+        <div class="chat-header bg-[#373AFF] text-white px-4 py-3 flex items-center gap-2 rounded-xl">
+<!--            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"-->
+<!--                 xmlns="http://www.w3.org/2000/svg">-->
+<!--                <path stroke-linecap="round" stroke-linejoin="round"-->
+<!--                      d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87M16 3.13a4 4 0 010 7.75M8 3.13a4 4 0 000 7.75m8 1.12A5 5 0 0112 17a5 5 0 01-4-2"></path>-->
+<!--            </svg>-->
+<!--            <h2 class="text-lg font-semibold">Grouply</h2>-->
+            <img src="./assets/Grouply2.png" alt="Logo" class="h-[50px] w-auto object-cover rounded-2xl">
         </div>
-        <div class="connecting">
-            Connecting...
-        </div>
-        <ul id="messageArea">
 
-        </ul>
-        <form id="messageForm" name="messageForm">
+        <!-- Connecting status + message area -->
+        <div class="flex-1 flex flex-col overflow-y-auto">
+            <div class="connecting text-sm text-gray-500 mb-2">
+                Connecting...
+            </div>
+            <ul id="messageArea" class="">
+                <!-- Messages will be appended here -->
+            </ul>
+        </div>
+
+        <!-- Message input area -->
+        <form id="messageForm" name="messageForm" class="border-t border-gray-200 p-4">
             <div class="form-group">
-                <div class="input-group clearfix">
-                    <input type="text" id="message" placeholder="Type a message..." autocomplete="off" class="form-control"/>
-                    <button type="submit" class="primary">Send</button>
+                <div class="flex items-center gap-4">
+                    <input type="text" id="message" placeholder="Type a message here" autocomplete="off"
+                           class="form-control w-full px-4 py-4 rounded-xl bg-[#f0f7ff] focus:outline-none" />
+                    <button type="submit"
+                            class="bg-[#373AFF] hover:bg-[#2c2fdc] text-white px-4 py-4 rounded-xl w-20 text-center">
+                        Send
+                    </button>
                 </div>
             </div>
         </form>
     </div>
-</div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-<script src="./js/main.js"></script>
+<script src="/js/main.js"></script>
 </body>
 </html>
