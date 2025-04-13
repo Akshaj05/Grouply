@@ -179,6 +179,9 @@ button.accent {
 #chat-page .chat-message {
     padding-left: 68px;
     position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 #chat-page .chat-message i {
@@ -187,7 +190,8 @@ button.accent {
     height: 42px;
     overflow: hidden;
     left: 10px;
-    display: inline-block;
+    display: flex;
+    flex-direction: column;
     vertical-align: middle;
     font-size: 18px;
     line-height: 42px;

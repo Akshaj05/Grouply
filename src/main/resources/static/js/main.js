@@ -67,23 +67,31 @@ function sendMessage(event) {
 
 function onMessageReceived(payload) {
     var message = JSON.parse(payload.body);
-
     var messageElement = document.createElement('li');
 
     if (message.type === 'JOIN') {
         messageElement.classList.add('event-message');
-        message.content = message.sender + ' joined!';
-    } else if (message.type === 'LEAVE') {
+        var textElement = document.createElement('p');
+        textElement.textContent = message.sender + ' joined!';
+        messageElement.appendChild(textElement);
+    }
+    else if (message.type === 'LEAVE') {
         messageElement.classList.add('event-message');
-        message.content = message.sender + ' left!';
+        var textElement = document.createElement('p');
+        var senderName = message.sender ? message.sender : 'Unknown User';
+        textElement.textContent = senderName + ' left!';
+        messageElement.appendChild(textElement);
     } else {
         messageElement.classList.add('chat-message');
+        messageElement.style.display = 'flex';
+        messageElement.style.alignItems = 'flex-start';
+        messageElement.style.margin = '10px 0';
 
         var avatarElement = document.createElement('div');
         avatarElement.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="24" height="24">
-            <path d="M12 12c2.67 0 8 1.34 8 4v2h-16v-2c0-2.66 5.33-4 8-4zm0-2a4 4 0 100-8 4 4 0 000 8z"/>
-        </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="24" height="24">
+                <path d="M12 12c2.67 0 8 1.34 8 4v2h-16v-2c0-2.66 5.33-4 8-4zm0-2a4 4 0 100-8 4 4 0 000 8z"/>
+            </svg>
         `;
         avatarElement.style.backgroundColor = getAvatarColor(message.sender);
         avatarElement.style.borderRadius = '50%';
@@ -95,9 +103,27 @@ function onMessageReceived(payload) {
         avatarElement.style.overflow = 'hidden';
 
         messageElement.appendChild(avatarElement);
+
+        var contentElement = document.createElement('div');
+        contentElement.style.display = 'flex';
+        contentElement.style.flexDirection = 'column';
+        contentElement.style.marginLeft = '10px';
+
+        var usernameElement = document.createElement('span');
+        usernameElement.textContent = message.sender;
+        usernameElement.style.fontSize = '14px';
+        usernameElement.style.color = '#555';
+
+        var textElement = document.createElement('p');
+        textElement.textContent = message.content;
+        textElement.style.margin = '0';
+        textElement.style.fontSize = '14px';
+
+        contentElement.appendChild(usernameElement);
+        contentElement.appendChild(textElement);
+        messageElement.appendChild(contentElement);
     }
 
-    // Removed the textElement creation and appending
     messageArea.appendChild(messageElement);
     messageArea.scrollTop = messageArea.scrollHeight;
 }
