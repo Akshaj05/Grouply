@@ -238,6 +238,23 @@ button.accent {
     top: 65px;
     width: 100%;
 }
+.chat-message .avatar {
+    position: absolute;
+    width: 42px;
+    height: 42px;
+    left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.chat-message .avatar svg {
+    width: 24px;
+    height: 24px;
+    fill: white;
+}
 
 
 @media screen and (max-width: 730px) {
