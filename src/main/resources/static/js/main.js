@@ -31,28 +31,25 @@ function connect(event) {
     event.preventDefault();
 }
 
-
 function onConnected() {
     stompClient.subscribe('/topic/public', onMessageReceived);
 
     stompClient.send("/app/chat.addUser",
         {},
-        JSON.stringify({sender: username, type: 'JOIN'})
-    )
+        JSON.stringify({ sender: username, type: 'JOIN' })
+    );
 
     connectingElement.classList.add('hidden');
 }
-
 
 function onError(error) {
     connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
     connectingElement.style.color = 'red';
 }
 
-
 function sendMessage(event) {
     var messageContent = messageInput.value.trim();
-    if(messageContent && stompClient) {
+    if (messageContent && stompClient) {
         var chatMessage = {
             sender: username,
             content: messageInput.value,
@@ -64,7 +61,6 @@ function sendMessage(event) {
     event.preventDefault();
 }
 
-
 function onMessageReceived(payload) {
     var message = JSON.parse(payload.body);
     var messageElement = document.createElement('li');
@@ -74,12 +70,15 @@ function onMessageReceived(payload) {
         var textElement = document.createElement('p');
         textElement.textContent = message.sender + ' joined!';
         messageElement.appendChild(textElement);
-    }
-    else if (message.type === 'LEAVE') {
+    } else if (message.type === 'LEAVE') {
         messageElement.classList.add('event-message');
+        if(message.content === null){
+            messageElement.style.display = 'none';
+            return;
+        }
         var textElement = document.createElement('p');
-        var senderName = message.sender ? message.sender : 'Unknown User';
-        textElement.textContent = senderName + ' left!';
+        // var senderName = message.content;
+        textElement.textContent = message.content + ' left!';
         messageElement.appendChild(textElement);
     } else {
         messageElement.classList.add('chat-message');
@@ -137,5 +136,13 @@ function getAvatarColor(messageSender) {
     return colors[index];
 }
 
-usernameForm.addEventListener('submit', connect, true)
-messageForm.addEventListener('submit', sendMessage, true)
+// Handle tab/window close to send LEAVE message
+window.addEventListener('beforeunload', function () {
+    if (stompClient && stompClient.connected && username) {
+        stompClient.send("/app/chat.addUser", {}, JSON.stringify({ sender: username, type: 'LEAVE' }));
+        stompClient.disconnect();
+    }
+});
+
+usernameForm.addEventListener('submit', connect, true);
+messageForm.addEventListener('submit', sendMessage, true);
