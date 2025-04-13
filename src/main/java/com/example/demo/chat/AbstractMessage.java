@@ -1,5 +1,6 @@
 package com.example.demo.chat;
 
+
 public abstract class AbstractMessage {
     private String sender;
 
@@ -14,7 +15,7 @@ public abstract class AbstractMessage {
     public String getSender() {
         return sender;
     }
-
+    //Setter is useful when we need to modify the sender after object creation
     public void setSender(String sender) {
         this.sender = sender;
     }

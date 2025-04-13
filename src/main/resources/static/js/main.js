@@ -16,9 +16,9 @@ var colors = [
     '#ffc107', '#ff85af', '#FF9800', '#39bbb0'
 ];
 
+// connect to the WebSocket server after the name is entered
 function connect(event) {
     username = document.querySelector('#name').value.trim();
-
     if (username) {
         usernamePage.classList.add('hidden');
         chatPage.classList.remove('hidden');
@@ -30,7 +30,7 @@ function connect(event) {
     }
     event.preventDefault();
 }
-
+// when connected subscribe to the public topic and send a JOIN message
 function onConnected() {
     stompClient.subscribe('/topic/public', onMessageReceived);
 
@@ -49,6 +49,7 @@ function onError(error) {
 
 function sendMessage(event) {
     var messageContent = messageInput.value.trim();
+    // if the message is not empty, send it to the server
     if (messageContent && stompClient) {
         var chatMessage = {
             sender: username,
@@ -62,9 +63,10 @@ function sendMessage(event) {
 }
 
 function onMessageReceived(payload) {
+    // parse the payload to get the message
     var message = JSON.parse(payload.body);
     var messageElement = document.createElement('li');
-
+    // checks the messege type whether it is a chat message or an event message
     if (message.type === 'JOIN') {
         messageElement.classList.add('event-message');
         var textElement = document.createElement('p');

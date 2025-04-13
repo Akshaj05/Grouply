@@ -2,9 +2,11 @@ package com.example.demo.chat;
 
 import lombok.*;
 
+//auto generate getters and setters for all fields
 @Getter
 @Setter
 @NoArgsConstructor
+//enable builder pattern for this class
 @Builder
 public class ChatMessage extends AbstractMessage {
     private String content;
